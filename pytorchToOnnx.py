@@ -1,4 +1,6 @@
-# Code to import pytorch monodepth2 model to an onnx model
+# In order to run this code, we need to change
+# networks/depth_decoder.py Line 63 to:
+# self.outputs[("disp", str(i))] = self.sigmoid(self.convs[("dispconv", i)](x))
 
 import torch
 import networks
@@ -19,3 +21,4 @@ dummy_input_dec = [torch.randn(1,64,96,320), torch.randn(1,64,48,160), torch.ran
 
 torch.onnx.export(encoder, dummy_input_enc, "onnx_encoder.onnx")
 torch.onnx.export(depth_decoder, dummy_input_dec, "onnx_decoder.onnx",opset_version=11)
+
